@@ -727,9 +727,14 @@ elf_locate_base (void)
     return dyn_ptr;
 
   /* This may be a static executable.  Look for the symbol
-     conventionally named _r_debug, as a last resort.  */
+     conventionally named _r_debug, as a last resort and check if
+     the address contained in the minimal symbol is valid before
+     proceeding.  */
   msymbol = lookup_minimal_symbol ("_r_debug", NULL, symfile_objfile);
-  if (msymbol != NULL)
+  if (msymbol != NULL
+      && !target_read_memory (SYMBOL_VALUE_ADDRESS (msymbol),
+			      (gdb_byte *)&dyn_ptr,
+			      TYPE_LENGTH (builtin_type (target_gdbarch ())->builtin_data_ptr)))
     return SYMBOL_VALUE_ADDRESS (msymbol);
 
   /* DT_DEBUG entry not found.  */
