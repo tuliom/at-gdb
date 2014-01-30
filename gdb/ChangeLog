@@ -1,3 +1,7 @@
+2014-01-30  Ulrich Weigand <uweigand@de.ibm.com>
+
+	* auxv.c (fprint_target_auxv): Handle AT_HWCAP2.
+
 2013-07-22  Edjunior Barbosa Machado  <emachado@linux.vnet.ibm.com>
 
 	* ppc-linux-nat.c (PPC_DEBUG_FEATURE_DATA_BP_DAWR): New define.
